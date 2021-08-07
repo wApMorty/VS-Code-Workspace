@@ -102,8 +102,6 @@ while True:
 
     while(time.localtime()[5] != 59):
         time.sleep(1)
-    
-    counter += 1
 
     time.sleep(1)
     
