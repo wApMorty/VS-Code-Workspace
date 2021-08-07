@@ -5,10 +5,6 @@ import tensorflow as tf
 APIKey = "d852d06372cc0ae5e9a575a83ee535913a73c5886f64df3504009124a301caa3"
 FileFolder = os.path.join("D:\\Users","Paul","Documents","VS Code Workspace","btcDatas")
 
-StartingTime = str(time.localtime()[2]) + "_" + str(time.localtime()[1]) + "_" + str(time.localtime()[0])
-FileName = StartingTime + ".txt"
-FullFilePath = os.path.join(FileFolder, FileName)
-
 # Functions
 def getValue(coin):
     requestURL = "https://min-api.cryptocompare.com/data/pricemulti?fsyms=" + coin + "&tsyms=USD&api_key=" + APIKey
@@ -62,6 +58,9 @@ timeResolution = 1 # Unite : minutes
 sleepTimer = timeResolution*60
 
 while True:
+    StartingTime = str(time.localtime()[2]) + "_" + str(time.localtime()[1]) + "_" + str(time.localtime()[0])
+    FileName = StartingTime + ".txt"
+    FullFilePath = os.path.join(FileFolder, FileName)
     if not os.path.isfile(FullFilePath):
         shutil.copyfile(os.path.join(FileFolder, "fileTemplate.txt"), FullFilePath)
 
