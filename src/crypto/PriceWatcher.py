@@ -1,5 +1,4 @@
 import requests, time, json, os, shutil
-import tensorflow as tf
 
 # Constants
 APIKey = "d852d06372cc0ae5e9a575a83ee535913a73c5886f64df3504009124a301caa3"
