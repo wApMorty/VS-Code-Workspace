@@ -6,6 +6,12 @@ I am currently working on a crypto-trading AI project ~~to make some profit~~ fo
 
 Feel free to wander here and make any suggestion to help me improve the code
 
+## AI Model
+
+As I am currently not too sure about the model that I am using, let's describe it here so everyone can get quickly what it looks like
+
+![Model](img/image.png)
+
 ## Project Architecture
 
 ### btcDatas
