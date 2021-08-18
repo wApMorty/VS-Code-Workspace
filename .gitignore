@@ -1,4 +1,3 @@
 *.code-workspace
 \__pycache__
-*.txt
 !fileTemplate.txt

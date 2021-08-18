@@ -1,48 +1,28 @@
-import requests, time, json
+import requests, time, json, os, shutil
 import tensorflow as tf
 
-APIKey = "d852d06372cc0ae5e9a575a83ee535913a73c5886f64df3504009124a301caa3"
+# model = tf.keras.models.load_model('myModel.h5')
 
-# Getting Datas
-def ema(s, n):
-    """
-    returns an n period exponential moving average for
-    the time series s
+DatasetFolder = os.path.join("D:\\Users","Paul","Documents","VS Code Workspace","btcTrainingDatasets")
+FileName  = "Data_7_8_2021.txt"
+FullInputFilePath = os.path.join(DatasetFolder, FileName)
 
-    s is a list ordered from oldest (index 0) to most
-    recent (index -1)
-    n is an integer
+file = open(FullInputFilePath, "r")
 
-    returns a numeric array of the exponential
-    moving average
-    """
-    ema = []
-    j = 1
+watchedValues = json.load(file)
+inputs = watchedValues["inputs"]
+results = watchedValues["outputs"]
 
-    if len(s) > n :
-        #get n sma first and calculate the next n period ema
-        sma = sum(s[:n]) / n
-        multiplier = 2 / float(1 + n)
-        for i in range(n):
-            ema.append(sum(s[:n+1])/(n+1))
+print(len(inputs))
+print(len(results))
 
-        #EMA(current) = ( (Price(current) - EMA(prev) ) x Multiplier) + EMA(prev)
-        ema.append(( (s[n] - sma) * multiplier) + sma)
+file.close()
 
-        #now calculate the rest of the values
-        for i in s[n+1:]:
-            tmp = ( (i - ema[j]) * multiplier) + ema[j]
-            j = j + 1
-            ema.append(tmp)
-    
-    else :
-        for i in range(len(s)):
-            ema.append(sum(s[:i+1])/(i+1))
+inp = tf.keras.Input(shape=(10,))
+dense = tf.keras.layers.Dense(5, activation=tf.keras.activations.relu)(inp)
+outp = tf.keras.layers.Dense(3, activation=tf.keras.activations.sigmoid)(dense)
+model = tf.keras.Model(inputs=inp, outputs=outp)
 
-    return ema
+model.compile(optimizer=tf.keras.optimizers.Adam(), loss=tf.keras.losses.mean_squared_error, metrics=[tf.keras.metrics.Precision(),tf.keras.metrics.Recall(),tf.keras.metrics.MeanSquaredError()])
 
-def macd(s):
-    shortEMA = ema(s, 12)[-1]
-    longEMA = ema(s, 26)[-1]
-    return (shortEMA - longEMA)
-
+model.fit(inputs, results, epochs=5, shuffle=False)

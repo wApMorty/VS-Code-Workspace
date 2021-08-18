@@ -1,9 +1,8 @@
-import requests, time, json, os, shutil
-import tensorflow as tf
+import json, os, shutil
 
 # Constants
 InputFolder = os.path.join("D:\\Users","Paul","Documents","VS Code Workspace","btcDatas")
-FileName  = "9_8_2021.txt"
+FileName  = "17_8_2021.txt"
 FullInputFilePath = os.path.join(InputFolder, FileName)
 
 file = open(FullInputFilePath, "r")
